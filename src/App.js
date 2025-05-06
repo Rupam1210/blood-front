@@ -36,7 +36,7 @@ function App() {
     <ToastContainer/>
       <Routes>
       
-        <Route exact path='/' element={
+        {/* <Route exact path='/' element={
         <Protected>
            <Home/>
         </Protected>
@@ -104,6 +104,75 @@ function App() {
         <Protected>
            <Admin/>
         </Protected>
+     }/> */}
+     <Route exact path='/' element={
+ 
+           <Home/>
+         
+     }/>
+     <Route exact path='/guest' element={
+        <Guest/>
+                   
+     }/>
+     <Route exact path='/donor' element={
+       
+           <Donar/>
+        
+     }/>
+     <Route exact path='/bloodcamp' element={
+         
+           <BloodCamp/>
+       
+     }/>
+      <Route exact path='/invent' element={
+       
+           <Inventory/>
+         
+     }/>
+     <Route exact path='/hospital' element={
+     
+           <Hospiital/>
+       
+     }/>
+      <Route exact path='/request' element={
+        
+           <Request/>
+        
+     }/>
+     <Route exact path='/org-request' element={
+        
+           <Orgrequest/>
+         
+     }/>
+     <Route exact path='/organisation' element={
+        
+           <Orgpage/>
+        
+     }/>
+     <Route exact path='/analytics' element={
+        
+           <Analytics/>
+        
+     }/>
+     <Route exact path='/hospital-list' element={
+       
+           <Hospitallist/>
+        
+     }/>
+      <Route exact path='/org-list' element={
+      
+           <Orglist/>
+      
+     }/>
+      <Route exact path='/donor-list' element={
+    
+           <DonarList/>
+    
+     }/>
+      <Route exact path='/admin' element={
+       
+           <Admin/>
+       
      }/>
        
         <Route exact path='/login' element={<Login/>}/>

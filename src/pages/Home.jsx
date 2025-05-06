@@ -44,7 +44,7 @@ const Home = () => {
    
   return (
     <>
-      {!user && <Spinner />}
+      {/* {!user && <Spinner />} */}
       <div  >
        <Navbar/>
         {user?.role === "admin" && navigate("/admin")}
