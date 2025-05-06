@@ -36,78 +36,78 @@ function App() {
     <ToastContainer/>
       <Routes>
       
-        <Route path='/' element={
+        <Route exact path='/' element={
         <Protected>
            <Home/>
         </Protected>
      }/>
-     <Route path='/guest' element={
+     <Route exact path='/guest' element={
         <Guest/>
                    
      }/>
-     <Route path='/donor' element={
+     <Route exact path='/donor' element={
         <Protected>
            <Donar/>
         </Protected>
      }/>
-     <Route path='/bloodcamp' element={
+     <Route exact path='/bloodcamp' element={
          
            <BloodCamp/>
        
      }/>
-      <Route path='/invent' element={
+      <Route exact path='/invent' element={
         <Protected>
            <Inventory/>
         </Protected>
      }/>
-     <Route path='/hospital' element={
+     <Route exact path='/hospital' element={
         <Protected>
            <Hospiital/>
         </Protected>
      }/>
-      <Route path='/request' element={
+      <Route exact path='/request' element={
         <Protected>
            <Request/>
         </Protected>
      }/>
-     <Route path='/org-request' element={
+     <Route exact path='/org-request' element={
         <Protected>
            <Orgrequest/>
         </Protected>
      }/>
-     <Route path='/organisation' element={
+     <Route exact path='/organisation' element={
         <Protected>
            <Orgpage/>
         </Protected>
      }/>
-     <Route path='/analytics' element={
+     <Route exact path='/analytics' element={
         
            <Analytics/>
         
      }/>
-     <Route path='/hospital-list' element={
+     <Route exact path='/hospital-list' element={
         <Protected>
            <Hospitallist/>
         </Protected>
      }/>
-      <Route path='/org-list' element={
+      <Route exact path='/org-list' element={
         <Protected>
            <Orglist/>
         </Protected>
      }/>
-      <Route path='/donor-list' element={
+      <Route exact path='/donor-list' element={
         <Protected>
            <DonarList/>
         </Protected>
      }/>
-      <Route path='/admin' element={
+      <Route exact path='/admin' element={
         <Protected>
            <Admin/>
         </Protected>
      }/>
        
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
+        <Route exact path='/login' element={<Login/>}/>
+        <Route exact path='/register' element={<Register/>}/>
       </Routes>
     </Router>
     </UserContextProvider>
