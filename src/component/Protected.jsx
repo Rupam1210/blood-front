@@ -8,7 +8,7 @@ import { useCookies } from 'react-cookie';
  
 
 const Protected = ({children}) => {
-   const[cookie,setcookie]=useCookies('token')
+   const[cookie,setcookie]=useCookies(['token'])
     
     if(cookie.token){ 
         return children
