@@ -7,7 +7,7 @@ import Register from './pages/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
-import Protected from './component/Protected';
+// import Protected from './component/Protected';
 import { UserContextProvider } from './context/UserContext';
 import Donar from './pages/dashboard/Donor';
 import Hospiital from './pages/dashboard/Hospiital';
@@ -24,11 +24,12 @@ import Inventory from './pages/dashboard/Inventory';
 import BloodCamp from './pages/dashboard/Bloodcamp';
 import Guest from './pages/guest';
  
+ 
 export const API=axios.create({baseURL:process.env.REACT_APP_API_URL})
 // console.log(process.env.REACT_APP_API_URL)
 
 function App() {
-
+ 
   return (
     <>
     <UserContextProvider>

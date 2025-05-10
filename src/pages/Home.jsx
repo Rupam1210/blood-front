@@ -12,13 +12,53 @@ import { API } from "../App";
 import moment from "moment";
 import Navbar from "../component/shared/Navbar";
 import DonorAccordion from "../component/shared/Donoracc";
-
+// import { useCookies } from "react-cookie";
+const bloodTraits = [
+  {
+    group: "O-",
+    trait:
+      "The universal red cell donor — O-negative blood can be transfused to patients of all blood types. This type is crucial in emergencies. Extremely rare and always in high demand.",
+  },
+  {
+    group: "O+",
+    trait:
+      "The most common blood type. Can donate to any Rh-positive blood group. Often used in trauma situations where quick transfusions are needed.",
+  },
+  {
+    group: "A-",
+    trait:
+      "Rare type. Can donate to A-, A+, AB-, AB+. Often in demand for plasma and platelet donations.",
+  },
+  {
+    group: "A+",
+    trait:
+      "Second most common type. Can donate to A+ and AB+. Commonly used in surgeries and chronic illnesses.",
+  },
+  {
+    group: "B-",
+    trait:
+      "Rare and valuable. Can donate to B-, B+, AB-, AB+. Crucial for maintaining a diverse blood supply.",
+  },
+  {
+    group: "B+",
+    trait:
+      "Can donate to B+ and AB+. Common in South Asia and used in general transfusions.",
+  },
+  {
+    group: "AB-",
+    trait:
+      "Very rare. Can donate to AB-, AB+. Known for its unique plasma compatibility as a universal plasma donor.",
+  },
+  {
+    group: "AB+",
+    trait:
+      "The universal plasma recipient and red cell recipient — can receive blood from any group. Rarest of all blood types.",
+  },
+];
 const Home = () => {
+  const [open, setOpen] = useState(false);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
- 
-
 
   const [data, setData] = useState([]);
   const [loading, setloading] = useState(false);
@@ -41,12 +81,12 @@ const Home = () => {
   useEffect(() => {
     getall();
   }, []);
-   
+
   return (
     <>
       {/* {!user && <Spinner />} */}
-      <div  >
-       <Navbar/>
+      <div>
+        <Navbar />
         {user?.role === "admin" && navigate("/admin")}
         {loading ? (
           <Spinner />
@@ -126,11 +166,9 @@ const Home = () => {
                   </div>
 
                   <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
-                    <h2 className="text-xl font-semibold">
-                      Analytics 
-                    </h2>
+                    <h2 className="text-xl font-semibold">Analytics</h2>
                     <p className="mt-2 text-center">
-                    Monitor donation and generate availability.
+                      Monitor donation and generate availability.
                     </p>
                     <Link
                       className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
@@ -155,9 +193,7 @@ const Home = () => {
                   {/* blood camp */}
 
                   <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
-                    <h2 className="text-xl font-semibold">
-                      BloodCamp Details
-                    </h2>
+                    <h2 className="text-xl font-semibold">BloodCamp Details</h2>
                     <p className="mt-2 text-center">
                       Creation of BloodCamp for Donation.
                     </p>
@@ -183,65 +219,100 @@ const Home = () => {
                 </div>
 
                 {/* Footer */}
-               
               </div>
             )}
           </>
         )}
 
-        {(user?.role === "donor" || user?.role === "hospital" )&& (
+        {(user?.role === "donor" || user?.role === "hospital") && (
           <div className="min-h-screen p-4 flex flex-col md:flex-row items-center justify-between bg-gradient-to-r from-blue-500 to-indigo-600 text-white  space-x-8">
             {/* Left Section - Content */}
             <div className=" md-w-2/3  text-center md:text-left space-y-6">
-            {user?.role==="hospital"&&(
-            <>
-              <h1 className="text-4xl font-bold leading-tight">
-              Welcome to Hospital Portal
-              </h1>
-              <p className="text-lg text-gray-200">
-                Your donation can be a lifeline for someone in need. Join our
-                mission to provide blood to those who need it the most.
-              </p>
-              </>)}
-              {user?.role==="donor"&&(
-               <>
-               <h1 className="text-4xl font-bold leading-tight">
-               Donate Blood, Save Lives!
-             </h1>
-             <p className="text-lg text-gray-200">
-               Your donation can be a lifeline for someone in need. Join our
-               mission to provide blood to those who need it the most.
-             </p>
-             <div className="  sm:w-1/3 bg-white p-6 rounded-lg shadow-lg mb-8">
-             <DonorAccordion/>
-             </div>
-              
-       
-    
-             {/* <button
+              {user?.role === "hospital" && (
+                <>
+                  <h1 className="text-4xl font-bold leading-tight">
+                    Welcome to Hospital Portal
+                  </h1>
+                  <p className="text-lg text-gray-200">
+                    Your donation can be a lifeline for someone in need. Join
+                    our mission to provide blood to those who need it the most.
+                  </p>
+                </>
+              )}
+              {user?.role === "donor" && (
+                <>
+                  <h1 className="text-4xl font-bold leading-tight">
+                    Donate Blood, Save Lives!
+                  </h1>
+                  <p className="text-lg text-gray-200">
+                    Your donation can be a lifeline for someone in need. Join
+                    our mission to provide blood to those who need it the most.
+                  </p>
+                  <button
+                      className="bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 text-white px-8 py-3 rounded-full shadow-lg text-lg font-semibold tracking-wide"
+                      onClick={() => setOpen(true)}
+                    >
+                      Blood Group Info
+                    </button>
+
+                    {open && (
+                      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+                        <div className="bg-white rounded-2xl p-6 w-full max-w-2xl shadow-xl relative overflow-y-auto max-h-[90vh] border border-red-100">
+                          <h2 className="text-3xl font-extrabold mb-6 text-center text-red-700 underline decoration-red-300">
+                            Understanding Blood Groups
+                          </h2>
+                          <ul className="space-y-4 text-base leading-relaxed text-gray-800">
+                            {bloodTraits.map(({ group, trait }) => (
+                              <li
+                                key={group}
+                                className="p-4 rounded-lg bg-red-50 shadow-sm border-l-4 border-red-500"
+                              >
+                                <span className="text-red-700 font-bold text-lg mr-2">
+                                  {group}
+                                </span>
+                                <span>{trait}</span>
+                              </li>
+                            ))}
+                          </ul>
+                          <button
+                            onClick={() => setOpen(false)}
+                            className="absolute top-3 right-4 text-gray-500 hover:text-red-600 text-2xl font-bold"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  <div className="  sm:w-1/3 bg-white p-6 rounded-lg shadow-lg mb-8">
+                    <DonorAccordion />
+
+                   
+                  </div>
+
+                  {/* <button
                disabled
                className="bg-white text-blue-600 px-6 py-3 rounded-lg shadow-lg hover:bg-gray-200 transition"
              >
                Become a Donor
              </button> */}
-             </>
+                </>
               )}
               <div className="w-full max-w-6xl grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
-                    <h2 className="text-xl font-semibold">Organisation Lists</h2>
-                    <p className="mt-2 text-center">
-                      Monitor Organisation list and its details.
-                    </p>
-                    <Link
-                      className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-center"
-                      to={"/organisation"}
-                    >
-                      View Organisation
-                    </Link>
-                  </div>
+                <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
+                  <h2 className="text-xl font-semibold">Organisation Lists</h2>
+                  <p className="mt-2 text-center">
+                    Monitor Organisation list and its details.
+                  </p>
+                  <Link
+                    className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-center"
+                    to={"/organisation"}
+                  >
+                    View Organisation
+                  </Link>
+                </div>
                 <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
                   <h2 className="text-xl font-semibold text-center">
-                     Create a Requests
+                    Create a Requests
                   </h2>
                   <p className="mt-2 text-center">
                     Put blood requests to the organisation.
@@ -253,47 +324,41 @@ const Home = () => {
                     Check Requests
                   </Link>
                 </div>
-                {
-                  user?.role==="donor" &&
+                {user?.role === "donor" && (
                   <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
-                  <h2 className="text-xl font-semibold text-center">
-                  See bloodcamp Detail.
-                  </h2>
-                  <p className="mt-2 text-center">
-                   
-                    Check the List of upcomimg Bloodcamp
-                  </p>
-                  <Link
-                    className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-center"
-                    to={"/bloodcamp"}
-                  >
-                    Check BloodCamp
-                  </Link>
-                </div>
-                }
-                <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
-                    <h2 className="text-xl font-semibold">
-                      Analytics
+                    <h2 className="text-xl font-semibold text-center">
+                      See bloodcamp Detail.
                     </h2>
                     <p className="mt-2 text-center">
-                      Monitor donation and generate availability.
+                      Check the List of upcomimg Bloodcamp
                     </p>
                     <Link
                       className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-center"
-                      to={"/analytics"}
+                      to={"/bloodcamp"}
                     >
-                      View Analytics
+                      Check BloodCamp
                     </Link>
                   </div>
+                )}
+                <div className="bg-white p-6 rounded-xl shadow-lg text-gray-800 flex flex-col items-center">
+                  <h2 className="text-xl font-semibold">Analytics</h2>
+                  <p className="mt-2 text-center">
+                    Monitor donation and generate availability.
+                  </p>
+                  <Link
+                    className="mt-4 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg text-center"
+                    to={"/analytics"}
+                  >
+                    View Analytics
+                  </Link>
+                </div>
               </div>
             </div>
 
             {/* Right Section - Image */}
             <div className=" hidden sm:flex md:h-full md:w-1/3  flex justify-center mt-8 md:mt-0 items-center">
               <img
-                src={
-                   "./images/banner2.jpg"
-                }
+                src={"./images/banner2.jpg"}
                 alt="Donor Illustration"
                 className="w-full h-1/2 max-w-md rounded-full shadow-xl object-cover "
               />
@@ -310,9 +375,8 @@ const Home = () => {
           //    </p>
           // </div>
         )}
-      {/* </Layout> */}
+        {/* </Layout> */}
       </div>
-      
     </>
   );
 };
